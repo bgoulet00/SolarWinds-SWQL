@@ -1,3 +1,5 @@
+-- Developed and tested with SolarWind 2023.4.2
+
 SELECT
 	[Alert].Enabled AS [Alert Enabled]
 	,[Alert].Name AS [Alert Name]
