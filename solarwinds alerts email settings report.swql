@@ -1,0 +1,16 @@
+SELECT
+	[Alert].Enabled AS [Alert Enabled]
+	,[Alert].Name AS [Alert Name]
+	,[Actions].Title AS [Action Name]
+	,[Asignment].CategoryType
+	,[Actions].Description AS Email
+	,CASE
+        	WHEN [SMTP].Address is NULL THEN 'DEFAULT'
+        	ELSE [SMTP].Address
+    	END AS [SMTP Server]
+FROM Orion.Actions AS [Actions]
+LEFT OUTER JOIN Orion.SMTPServers AS [SMTP] ON [Actions].Properties.PropertyValue = [SMTP].SMTPServerID
+LEFT OUTER JOIN Orion.ActionsAssignments AS [Asignment] ON [Actions].ActionID = [Asignment].ActionID
+LEFT OUTER JOIN Orion.AlertConfigurations AS [Alert] ON [Asignment].ParentID = [Alert].AlertID
+WHERE 
+	[Actions].Properties.PropertyName = 'SmtpServerID'
